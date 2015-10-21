@@ -14,8 +14,6 @@ void setup()
 }
 void draw()
 {
-	fill(0,0,0,30);
-	ellipse(-1,-1,sizeX+2,sizeY+2);
 	for(int i=0;i<stars.length;i++)
 	{
 		stars[i].move();
