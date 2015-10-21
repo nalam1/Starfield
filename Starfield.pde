@@ -32,13 +32,13 @@ class NormalParticle implements Particle
 		b=(int)(Math.random()*256);
 		x=sizeX/2;
 		y=sizeY/2;
-		speed=Math.random()*5;
+		speed=Math.random()*7;
 		angle=Math.random()*TWO_PI;
 		size=10;
 	}
 	void move()
 	{
-		angle=angle+0.0075;
+		angle=angle+0.0085;
 		x=x+(Math.cos(angle))*speed;
 		y=y+(Math.sin(angle))*speed;
 	}
