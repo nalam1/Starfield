@@ -46,7 +46,7 @@ class NormalParticle implements Particle
 	{
 		stroke(r,g,b);
 		fill(r,g,b);
-		rect((float)x,(float)y,size,size);
+		ellipse((float)x,(float)y,size,size);
 	}
 }
 interface Particle
