@@ -1,7 +1,8 @@
 
 body {
-    background-color: rgb(200,200,200);
-    color: rgb(0,0,0);
+    background-image: url('http://www.siwallpaperhd.com/wp-content/uploads/2015/05/amazing_space_galaxy_wallpaper_hd_7.jpg');
+	background-size:cover;
+    color: rgb(255,255,255);
     font-family: "Open Sans", sans-serif;
     text-align: center;
 }
