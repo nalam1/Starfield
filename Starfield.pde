@@ -1,149 +1,100 @@
 
-particle[] particles;
-int counter = 0;
-double rotation = 0;
-double rotateby = Math.PI/100;
+Particle stars[]=new Particle[1111];
+int sizeX=800;
+int sizeY=800;
 void setup()
 {
-  size(600, 600);
-  background(0);
-  rectMode(CENTER);
-  noStroke();
-  particles = new particle[200];
-  for (int i = 0; i < particles.length; i++)
-  {
-    particles[i] = new normal();
-  }
-  particles[0] = new oddball();
-  particles[1] = new jumbo();
+	size(sizeX,sizeY);
+	for(int i=0;i<stars.length-2;i++)
+	{
+		stars[i]=new NormalParticle();
+	}
+	stars[stars.length-2]=new OddballParticle();
+	stars[stars.length-1]=new JumboParticle();
 }
 void draw()
 {
-  translate(width/2,height/2);
-  rotate((float)rotation);
-  translate(-width/2,-height/2);
-  fill(0, 20);
-  rect(300, 300, 610, 610);
-  for (int i = 0; i < particles.length; i++)
-  {
-    particles[i].move();
-    particles[i].colorchange();
-    particles[i].show();
-  }
-  if((counter-150)%300==0)
-  {
-    for (int i = 0; i < particles.length; i++)
-    {
-      particles[i].directionchange();
-    }
-  }
-  if (counter%300==0)
-  {
-    rotateby*=-1;
-  }
-  counter++;
-  rotation+=rotateby;
+	fill(0,0,0,30);
+	ellipse(-1,-1,sizeX+2,sizeY+2);
+	for(int i=0;i<stars.length;i++)
+	{
+		stars[i].move();
+		stars[i].show();
+	}
 }
-
-void mousePressed()
+class NormalParticle implements Particle
 {
-  for (int i = 0; i < particles.length; i++)
-  {
-    particles[i] = new normal();
-  }
-  particles[0] = new oddball();
-  particles[1] = new jumbo();
-  counter = 0;
+	float r,g,b;
+	double x,y,speed,angle;
+	int size;
+	NormalParticle()
+	{
+		r=(int)(Math.random()*256);
+		g=(int)(Math.random()*256);
+		b=(int)(Math.random()*256);
+		x=sizeX/2;
+		y=sizeY/2;
+		speed=Math.random()*5;
+		angle=Math.random()*TWO_PI;
+		size=10;
+	}
+	void move()
+	{
+		angle=angle+0.0075;
+		x=x+(Math.cos(angle))*speed;
+		y=y+(Math.sin(angle))*speed;
+	}
+	void show()
+	{
+		stroke(r,g,b);
+		fill(r,g,b);
+		rect((float)x,(float)y,size,size);
+	}
 }
-void keyPressed()
+interface Particle
 {
-
+	public void move();
+	public void show();
 }
-
-interface particle
+class OddballParticle implements Particle
 {
-  public void move();
-  public void colorchange();
-  public void show();
-  public void directionchange();
+	double x,y,speed,angle;
+	int size;
+	OddballParticle()
+	{
+		x=sizeX/2;
+		y=sizeY/2;
+		speed=Math.random()*10;
+		angle=Math.random()*TWO_PI;
+		size=15;
+	}
+	void move()
+	{
+		angle=angle+0.0075;
+		x=x-(Math.cos(angle))*speed;
+		y=y-(Math.sin(angle))*speed;
+		if(x<0||x>sizeX)
+		{
+			x=x+(Math.cos(angle))*speed;
+		}
+		if(y<0||y>sizeY)
+		{
+			y=y+(Math.sin(angle))*speed;
+		}
+
+	}
+	void show()
+	{
+		stroke(255);
+		fill(255);
+		ellipse((float)x,(float)y,size,size);
+
+	}
 }
-
-class normal implements particle
-{
-  double x, y, angle, speed;
-  int r, g, b, size;
-  String change;
-  normal()
-  {
-    x = 300;
-    y = 300;
-    angle = (Math.random()*Math.PI*2);
-    speed = (Math.random()*3);
-    r = 0;
-    g = 0;
-    b = 255;
-    size = 10;
-    change = "br";
-  }
-  public void directionchange()
-  {
-    speed*=-1;
-  }
-  public void move()
-  {
-    x += Math.cos(angle)*speed;
-    y += Math.sin(angle)*speed;
-  }
-
-  public void show()
-  {
-    fill(r, g, b);
-    ellipse((float)x, (float)y, size, size);
-  }
-}
-
-class oddball implements particle
-{
-  double x, y, angle, speed;
-  int r, g, b, size;
-  oddball()
-  {
-    x = 300;
-    y = 300;
-    angle = (Math.random()*Math.PI*2);
-    speed = (Math.random()*3);
-    r = 0;
-    g = 0;
-    b = 255;
-    size = 10;
-  }
-  public void directionchange()
-  {
-    speed*=-1;
-  }
-  public void move()
-  {
-    x += Math.cos(angle)*speed + Math.random()*4-2;
-    y += Math.sin(angle)*speed + Math.random()*4-2;
-  }
-  public void colorchange()
-  {
-  }
-  public void show()
-  {
-    r = (int)(Math.random()*255);
-    g = (int)(Math.random()*255);
-    b = (int)(Math.random()*255);
-    fill(r, g, b);
-    ellipse((float)x, (float)y, size, size);
-  }
-}
-
-class jumbo extends normal
-{
-  public void show()
-  {
-    fill(r, g, b);
-    ellipse((float)x, (float)y, size*3, size*3);
-  }
+class JumboParticle extends NormalParticle
+{	
+	JumboParticle()
+	{
+		size=25;
+	}
 }
